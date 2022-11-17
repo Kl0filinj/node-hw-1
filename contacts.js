@@ -9,7 +9,6 @@ export async function listContacts() {
     const contacts = await readFile(contactsPath, "utf8");
     console.log("Contacts list below: ");
     console.log(JSON.parse(contacts));
-    // return contacts;
   } catch (error) {
     console.log(error);
   }
@@ -21,6 +20,7 @@ export async function getContactById(contactId) {
     const parsedDataById = JSON.parse(contacts).filter(
       (item) => item.id === contactId
     );
+    console.log(`Contact with id ${contactId} below: `);
     console.log(parsedDataById);
   } catch (error) {
     console.log(error);
@@ -33,7 +33,7 @@ export async function removeContact(contactId) {
     const parsedContacts = JSON.parse(contacts);
     const filteredData = parsedContacts.filter((item) => item.id !== contactId);
     await writeFile(contactsPath, JSON.stringify(filteredData), "utf8");
-    // console.log(JSON.stringify(filteredData));
+    console.log(`Contact with id ${contactId} was deleted`);
   } catch (error) {
     console.log(error);
   }
@@ -45,8 +45,7 @@ export async function addContact(name, email, phone) {
     const parsedContacts = JSON.parse(contacts);
     const newContent = [...parsedContacts, { id: email, name, email, phone }];
     await writeFile(contactsPath, JSON.stringify(newContent), "utf8");
-    // parsedContacts.push({ id: email, name, email, phone });
-    // console.log(response);
+    console.log(`Contact ${name} was added`);
   } catch (error) {
     console.log(error);
   }
