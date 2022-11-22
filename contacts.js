@@ -1,6 +1,5 @@
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
-import { appendFile } from "node:fs";
 
 export const contactsPath = path.resolve("./db/contacts.json");
 
@@ -8,7 +7,7 @@ export async function listContacts() {
   try {
     const contacts = await readFile(contactsPath, "utf8");
     console.log("Contacts list below: ");
-    console.log(JSON.parse(contacts));
+    console.table(JSON.parse(contacts));
   } catch (error) {
     console.log(error);
   }
@@ -17,7 +16,7 @@ export async function listContacts() {
 export async function getContactById(contactId) {
   try {
     const contacts = await readFile(contactsPath, "utf8");
-    const parsedDataById = JSON.parse(contacts).filter(
+    const parsedDataById = JSON.parse(contacts).find(
       (item) => item.id === contactId
     );
     console.log(`Contact with id ${contactId} below: `);
